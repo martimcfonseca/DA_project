@@ -1,0 +1,15 @@
+# Documentation
+docs/
+
+# CLion / JetBrains IDE
+.idea/
+
+# Build files
+build/
+cmake-build-debug/
+cmake-build-release/
+
+# Compiled files
+*.o
+*.out
+*.exe
