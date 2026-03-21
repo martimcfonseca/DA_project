@@ -3,11 +3,11 @@
 // Created by marti on 16/03/2026.
 //
 
-std::vector<std::vector<int> > Input::getSubmissions() const  {
+std::vector<Submission> Input::getSubmissions() const  {
     return submissions;
 }
 
-std::vector<std::vector<int> > Input::getReviewers() const {
+std::vector<Reviewer> Input::getReviewers() const {
     return reviewers;
 }
 
@@ -47,11 +47,11 @@ std::string Input::getOutputFileName() const {
     return outputFileName;
 }
 
-void Input::setSubmissions(std::vector<std::vector<int>>& submissions) {
+void Input::setSubmissions(std::vector<Submission> &submissions) {
     this->submissions = submissions;
 }
 
-void Input::setReviewers(std::vector<std::vector<int> >& reviewers) {
+void Input::setReviewers(std::vector<Reviewer> &reviewers) {
     this->reviewers = reviewers;
 }
 
@@ -79,11 +79,11 @@ void Input::setSecondarySubmissionDomain(int secondarySubmissionDomain) {
     this->secondarySubmissionDomain = secondarySubmissionDomain;
 }
 
-void Input::addSubmission(const std::vector<int>& submission) {
+void Input::addSubmission(const Submission &submission) {
     submissions.push_back(submission);
 }
 
-void Input::addReviewer(const std::vector<int>& reviewer) {
+void Input::addReviewer(const Reviewer &reviewer) {
     reviewers.push_back(reviewer);
 }
 
