@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-add_executable(Parse Parser.cpp menu.cpp)
+add_executable(Parse Parser.cpp)
