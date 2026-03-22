@@ -8,30 +8,9 @@
 #include <vector>
 #include "Input.h"
 #include "Graph.h"
+#include "Parser.h"
 using namespace std;
 
-class Node {
-public:
-    int id;
-    enum class Type { SOURCE, SINK, SUBMISSION, REVIEWER } type;
-    int primary;
-    int secondary;
-
-    bool operator==(const Node& o) const {
-        return id == o.id && type == o.type;
-    }
-
-    void printNode() const{
-        std::cout << id << ' ';
-        switch (type) {
-            case Type::SOURCE: std::cout << "SOURCE";break;
-            case Type::SINK: std::cout << "SINK";break;
-            case Type::SUBMISSION: std::cout << "SUBMISSION";break;
-            case Type::REVIEWER: std::cout << "REVIEWER";break;
-        }
-        cout << ' ' << primary << ' ' << secondary <<std::endl;
-    }
-};
 
 void parseSubmission(string& line,Input& data) {
     Submission submission;
@@ -278,19 +257,3 @@ Graph<Node> makeGraph(const Input& data) {
 }
 
 
-int main() {
-    Input data = parseData();
-    Graph<Node> graph = makeGraph(data);
-    printData(data);
-
-    for (auto v : graph.getVertexSet()) {
-        if (v->getInfo().type == Node::Type::SUBMISSION) {
-            cout << "submission ";
-            v->getInfo().printNode();
-            for (auto& e : v->getAdj()) {
-                e->getDest()->getInfo().printNode();
-            }
-        }
-    }
-    return 0;
-}
