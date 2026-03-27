@@ -10,4 +10,5 @@ add_executable(DA_project
         src/Input.cpp
         src/Parser.cpp
         src/Menu.cpp
+        src/MaxFlow.cpp
 )

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include "Menu.h"
+#include "MaxFlow.h"
 
 void printMenu() {
     std::cout << "\n==========================" << endl;
@@ -87,10 +88,14 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
                 listParameters(data);
                 break;
-            case 5:
+            case 5: {
                 if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
-                //algoritmo por implementar
+                Node source{0, Node::Type::SOURCE};
+                Node sink{0, Node::Type::SINK};
+                edmondsKarp(&graph, source, sink);
+                printResults(graph,data);
                 break;
+            }
             case 6:
                 if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
                 //algoritmo por implementar

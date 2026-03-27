@@ -1,0 +1,14 @@
+
+
+#ifndef DA_PROJECT_MAXFLOW_H
+#define DA_PROJECT_MAXFLOW_H
+
+#include "Graph.h"
+#include "Parser.h"
+
+template <class T>
+void edmondsKarp(Graph<T> *g, T source, T target);
+
+void printResults(const Graph<Node>& graph, const Input& data);
+
+#endif //DA_PROJECT_MAXFLOW_H
