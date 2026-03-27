@@ -101,6 +101,8 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
                 Node source{0, Node::Type::SOURCE};
                 Node sink{0, Node::Type::SINK};
+                edmondsKarp(&graph,source,sink);
+                printResults(graph,data);
                 riskAnalysis(&graph, source, sink);
                 break;
             }

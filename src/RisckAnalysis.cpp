@@ -12,7 +12,6 @@ void riskAnalysis(Graph<T> *g, T source, T target) {
 
     std::vector<int> reviewers;
 
-    edmondsKarp(g, source, target);
     Vertex<T>* s = g->findVertex(source);
     double expectedFlow = 0;
     for (auto e : s->getAdj()) {
@@ -51,9 +50,9 @@ void riskAnalysis(Graph<T> *g, T source, T target) {
 
     }
 
-    std::cout << "teste" << std::endl;
+    std::cout << "#Risk Analysis: 1" << std::endl;
     for (auto r : reviewers) {
-        std::cout << r << " ";
+        std::cout << r << ", ";
     }
 
 
