@@ -2,6 +2,7 @@
 #include <limits>
 #include "Menu.h"
 #include "MaxFlow.h"
+#include "RiskAnalysis.h"
 
 void printMenu() {
     std::cout << "\n==========================" << endl;
@@ -96,10 +97,13 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 printResults(graph,data);
                 break;
             }
-            case 6:
+            case 6: {
                 if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
-                //algoritmo por implementar
+                Node source{0, Node::Type::SOURCE};
+                Node sink{0, Node::Type::SINK};
+                riskAnalysis(&graph, source, sink);
                 break;
+            }
             case 0:
                 cout << "A sair..." << endl;
                 break;
