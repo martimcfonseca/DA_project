@@ -11,4 +11,5 @@ add_executable(DA_project
         src/Parser.cpp
         src/Menu.cpp
         src/MaxFlow.cpp
+        src/RisckAnalysis.cpp
 )
