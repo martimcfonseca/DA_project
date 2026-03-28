@@ -94,15 +94,16 @@ void edmondsKarp(Graph<T> *g, T source, T target) {
    }
 }
 
+
 void printResults(const Graph<Node>& graph, const Input& data) {
     Node source{0, Node::Type::SOURCE};
     Node sink{0, Node::Type::SINK};
 
     // Maps for output
     // submissionId -> list of reviewerIds assigned
-    std::map<int, std::vector<int>> subToRevs;
-    // reviewerId -> list of submissionIds assigned
-    std::map<int, std::vector<int>> revToSubs;
+    std::map<int, std::vector<std::pair<int,int>>> subToRevs;
+    // reviewerId -> list of submissionIds assignedl
+    std::map<int, std::vector<std::pair<int,int>>> revToSubs;
 
     // Read flows on sub->reviewer edges
     for (auto& rev : data.getReviewers()) {
@@ -114,8 +115,16 @@ void printResults(const Graph<Node>& graph, const Input& data) {
             if (edge->getOrig()->getInfo().type == Node::Type::SUBMISSION
                 && edge->getFlow() > 0) {
                 int subId = edge->getOrig()->getInfo().id;
-                subToRevs[subId].push_back(rev.id);
-                revToSubs[rev.id].push_back(subId);
+                int subPrimary = edge->getOrig()->getInfo().primary;
+                int subSecondary = edge->getOrig()->getInfo().secondary;
+
+                int matchDomain;
+                if (rev.primary == subPrimary) matchDomain = subPrimary;
+                else if (rev.primary == subSecondary) matchDomain = subSecondary;
+                else if (rev.secondary == subPrimary) matchDomain = subPrimary;
+                else matchDomain = subSecondary;
+                subToRevs[subId].push_back({rev.id, matchDomain});
+                revToSubs[rev.id].push_back({subId, matchDomain});
             }
         }
     }
@@ -123,14 +132,14 @@ void printResults(const Graph<Node>& graph, const Input& data) {
     // #SubmissionId,ReviewerId,Match
     std::cout << "#SubmissionId,ReviewerId,Match\n";
     for (auto& [subId, revIds] : subToRevs)
-        for (int revId : revIds)
-            std::cout << subId << ", " << revId << ", 1\n";
+        for (auto& rev : revIds)
+            std::cout << subId << ", " << rev.first << ", " << rev.second << "\n";
 
     // #ReviewerId,SubmissionId,Match
     std::cout << "#ReviewerId,SubmissionId,Match\n";
     for (auto& [revId, subIds] : revToSubs)
-        for (int subId : subIds)
-            std::cout << revId << ", " << subId << ", 1\n";
+        for (auto& sub : subIds)
+            std::cout << revId << ", " << sub.first << ", " << sub.second << "\n";
 
     // Total assignments
     int total = 0;
@@ -138,12 +147,18 @@ void printResults(const Graph<Node>& graph, const Input& data) {
     std::cout << "#Total: " << total << "\n";
 
     // Missing reviews per submission
-    std::cout << "#SubmissionId,Domain,MissingReviews\n";
-    for (auto& sub : data.getSubmissions()) {
-        int assigned = subToRevs.count(sub.id) ? subToRevs[sub.id].size() : 0;
-        int missing = data.getMinReviewsPerSubmission() - assigned;
-        if (missing > 0)
-            std::cout << sub.id << ", " << sub.primary << ", " << missing << "\n";
+    std::vector<std::tuple<int,int,int>> miss;
+    for (auto& edge : graph.findVertex(source)->getAdj()) {
+        int missingFlow = data.getMinReviewsPerSubmission() - edge->getFlow();
+        if (missingFlow > 0) {
+            auto sub = edge->getDest()->getInfo();
+            miss.push_back({sub.id,sub.primary,missingFlow});
+        }
+    }
+    if (!miss.empty()) {
+        std::cout << "#SubmissionId,Domain,MissingReviews\n";
+        for (auto& [subId, domain, count] : miss)
+            std::cout << subId << ", " << domain << ", " << count << "\n";
     }
 }
 
