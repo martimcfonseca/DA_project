@@ -1,6 +1,11 @@
 //
 // Created by marti on 16/03/2026.
 //
+/**
+ * @file Parser.cpp
+ * @brief Implementation of functions for parsing input files and building the flow graph.
+ */
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -11,7 +16,14 @@
 #include "Parser.h"
 using namespace std;
 
-
+/**
+ * @brief Parses a line representing a submission and adds it to the Input object.
+ *
+ * @param line CSV line containing submission data (id, title, authors, email, primary domain, secondary domain).
+ * @param data Input object to populate.
+ *
+ * @note **Time Complexity:** O(1) .
+ */
 void parseSubmission(string& line,Input& data) {
     Submission submission;
     stringstream ss(line);
@@ -31,6 +43,14 @@ void parseSubmission(string& line,Input& data) {
     data.addSubmission(submission);
 }
 
+/**
+ * @brief Parses a line representing a reviewer and adds it to the Input object.
+ *
+ * @param line CSV line containing reviewer data (id, name, email, primary domain, secondary domain).
+ * @param data Input object to populate.
+ *
+ * @note **Time Complexity:** O(1) .
+ */
 void parseReviewer(string& line, Input& data) {
     Reviewer reviewer;
     stringstream ss(line);
@@ -48,7 +68,14 @@ void parseReviewer(string& line, Input& data) {
     data.addReviewer(reviewer);
 }
 
-
+/**
+ * @brief Parses a line containing a numeric parameter.
+ *
+ * @param line CSV line with the parameter value.
+ * @return int Parsed integer parameter.
+ *
+ * @note **Time Complexity:** O(1)
+ */
 int parseParameter(string& line) {
     stringstream ss(line);
     getline(ss,line,',');
@@ -56,6 +83,14 @@ int parseParameter(string& line) {
     return stoi(line);
 }
 
+/**
+ * @brief Parses a line containing a string parameter.
+ *
+ * @param line CSV line with the string value.
+ * @return string Extracted string value.
+ *
+ * @note **Time Complexity:** O(1)
+ */
 string parseString(string& line) {
     stringstream ss(line);
     getline(ss,line,',');
@@ -64,6 +99,7 @@ string parseString(string& line) {
 
     return line;
 }
+
 
 void printData(Input& data) {
     std::cout << "--- Input Class Details ---" << std::endl;
@@ -103,6 +139,16 @@ void printData(Input& data) {
 }
 
 
+/**
+ * @brief Reads data from standard input and populates an Input object.
+ *
+ * The input format is assumed to follow the specification with sections for submissions, reviewers,
+ * parameters, and execution modes. Lines starting with '#'.
+ *
+ * @return Input Populated Input object.
+ *
+ * @note **Time Complexity:** O(L), where L is the total number of lines read from stdin.
+ */
 Input parseData() {
     Input data;
     string line;
@@ -152,6 +198,15 @@ Input parseData() {
 
     return data;
 }
+
+/**
+ * @brief Reads data from a CSV file and populates an Input object.
+ *
+ * @param filename Path to the input CSV file.
+ * @return Input Populated Input object.
+ *
+ * @note **Time Complexity:** O(L), where L is the total number of lines in the file.
+ */
 
 Input parseFile(const string& filename) {
     ifstream file(filename);
@@ -206,6 +261,20 @@ Input parseFile(const string& filename) {
     return data;
 }
 
+/**
+ * @brief Builds the flow network graph from the Input object.
+ *
+ * Creates vertices for source, sink, submissions, and reviewers. Adds edges:
+ * - Source -> Submissions (capacity = minReviewsPerSubmission)
+ * - Submissions -> Reviewers (capacity = 1, depending on domain/expertise rules)
+ * - Reviewers -> Sink (capacity = maxReviewsPerReviewer)
+ *
+ * @param data Input object containing submissions, reviewers, and parameters.
+ * @return Graph<Node> Constructed flow network graph.
+ *
+ * @note **Time Complexity:** O(S × R) in the worst case, where S is the number of submissions and R is the number of reviewers,
+ * because each submission may potentially connect to each reviewer.
+ */
 Graph<Node> makeGraph(const Input& data) {
     Graph<Node> graph;
     Node source{0,Node::Type::SOURCE};

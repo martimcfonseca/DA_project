@@ -1,12 +1,32 @@
 //
 // Created by cristiano on 27/03/26.
 //
+
+/**
+ * @file RiskAnalysis.cpp
+ * @brief Implementation of the risk analysis functions.
+ */
+
 #include <iostream>
 #include "RiskAnalysis.h"
 #include <vector>
 #include "MaxFlow.h"
 #include "Parser.h"
 #include <fstream>
+
+
+/**
+ * @brief Implementation of the risk analysis algorithm.
+ *
+ * This algorithm identifies "critical reviewers". For each reviewer in the graph:
+ * 1. Temporarily removes their capacity (setWeight(0)).
+ * 2. Recalculates the Maximum Flow using the Edmonds-Karp algorithm.
+ * 3. If the total flow decreases, the reviewer is marked as critical.
+ * 4. Restores the original capacity for the next test.
+ *
+ * @note **Detailed Time Complexity:** O(R × (V · E²)), where R is the number of reviewers.
+ * This is the most computationally expensive operation in the system, as it runs Edmonds-Karp repeatedly.
+ */
 
 template <class T>
 void riskAnalysis(Graph<T> *g, T source, T target,const std::string& outputFile) {

@@ -1,7 +1,22 @@
+/**
+* @file MaxFlow.cpp
+ * @brief Detailed implementation of the Edmonds-Karp algorithm and reporting functions.
+ */
+
 #include "MaxFlow.h"
 #include <map>
 #include <fstream>
 
+/**
+ * @brief Helper function to visit a node, update the BFS queue, and check if an edge is valid.
+ *
+ * @param q Queue to be updated if necessary.
+ * @param e Edge to be analyzed.
+ * @param w Vertex to be checked.
+ * @param residual Residual capacity of the edge.
+ *
+ * @note **Time Complexity:** O(1).
+ */
 template <class T>
 void testAndVisit(std::queue< Vertex<T>*> &q, Edge<T> *e, Vertex<T> *w, double residual) {
     // Check if the vertex 'w' is not visited and there is residual capacity
@@ -13,6 +28,19 @@ void testAndVisit(std::queue< Vertex<T>*> &q, Edge<T> *e, Vertex<T> *w, double r
     }
 }
 
+
+/**
+ * @brief Searches for an augmenting path using Breadth-First Search (BFS).
+ *
+ * @param g Graph in which to find the augmenting path.
+ * @param s Pointer to the source vertex of the graph.
+ * @param t Pointer to the target vertex of the graph(sink).
+ *
+ * @note **Time Complexity:** O(V + E), where V is the number of vertices and
+ * E is the number of edges traversed during the search.
+ *
+ * @return true if the target (t) was reached, false otherwise.
+ */
 // Function to find an augmenting path using Breadth-First Search
 template <class T>
 bool findAugmentingPath(Graph<T> *g, Vertex<T> *s, Vertex<T> *t) {
@@ -37,6 +65,17 @@ bool findAugmentingPath(Graph<T> *g, Vertex<T> *s, Vertex<T> *t) {
     return t->isVisited();
 }
 
+
+/**
+ * @brief Computes the minimum residual capacity along a found path.
+ *
+ * @param s Pointer to the source vertex of the path.
+ * @param t Pointer to the target vertex of the path.
+ *
+ * @note **Time Complexity:** O(V) in the worst case (path traverses all vertices).
+ */
+template <class T>
+double findMinResidualAlongPath(Vertex<T> *s, Vertex<T> *t);
 // Function to find the minimum residual capacity along the augmenting path
 template <class T>
 double findMinResidualAlongPath(Vertex<T> *s, Vertex<T> *t) {
@@ -57,6 +96,18 @@ double findMinResidualAlongPath(Vertex<T> *s, Vertex<T> *t) {
     return f;
 }
 
+
+/**
+ * @brief Updates the flow (direct and residual) along the augmenting path.
+ *
+ * @param s Pointer to the source vertex of the path.
+ * @param t Pointer to the target vertex of the path.
+ * @param f Flow value to be added along the path.
+ *
+ * @note **Time Complexity:** O(V).
+ */
+template <class T>
+void augmentFlowAlongPath(Vertex<T> *s, Vertex<T> *t, double f);
 // Function to augment flow along the augmenting path with the given flow value
 template <class T>
 void augmentFlowAlongPath(Vertex<T> *s, Vertex<T> *t, double f) {
@@ -74,6 +125,15 @@ void augmentFlowAlongPath(Vertex<T> *s, Vertex<T> *t, double f) {
     }
 }
 
+/**
+ * @brief Main implementation of the Edmonds-Karp algorithm.
+ *
+ * @param g Pointer to the graph (flow network).
+ * @param source Source node.
+ * @param target Target node (sink).
+ *
+ * @note **Time Complexity:** O(V · E²).
+ */
 // Main function implementing the Edmonds-Karp algorithm
 template <class T>
 void edmondsKarp(Graph<T> *g, T source, T target) {
@@ -95,6 +155,28 @@ void edmondsKarp(Graph<T> *g, T source, T target) {
    }
 }
 
+/**
+ * @brief Processes the graph after the maximum flow computation and exports the assignment results.
+ *
+ * This function iterates through the graph edges to identify assignments between reviewers
+ * and submissions (where flow > 0), organizes the data in maps for ordered output,
+ * writes the results to a CSV file, and reports any missing reviews per submission.
+ *
+ * The output file contains:
+ * - SubmissionId, ReviewerId, Match
+ * - ReviewerId, SubmissionId, Match
+ * - Total number of assignments
+ * - Missing reviews per submission (if any)
+ *
+ * @param graph Reference to the processed flow graph.
+ * @param data Reference to the input data.
+ * @param outputFile Name of the output file where results will be written.
+ *
+ * @note **Time Complexity:** O(R × A + V + E), where R is the number of reviewers,
+ * A is the average number of assignments per reviewer, V is the number of vertices,
+ * and E is the number of edges in the graph.
+ */
+void printResults(const Graph<Node>& graph, const Input& data, const std::string& outputFile);
 
 void printResults(const Graph<Node>& graph, const Input& data,const std::string& outputFile) {
     Node source{0, Node::Type::SOURCE};
