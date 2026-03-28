@@ -165,7 +165,7 @@ void printResults(const Graph<Node>& graph, const Input& data,const std::string&
     if (!miss.empty()) {
         out << "#SubmissionId,Domain,MissingReviews\n";
         for (auto& [subId, domain, count] : miss)
-            std::cout << subId << ", " << domain << ", " << count << "\n";
+            out << subId << ", " << domain << ", " << count << "\n";
     }
 }
 

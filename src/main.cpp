@@ -4,6 +4,8 @@
 #include "Graph.h"
 #include "Parser.h"
 #include "Menu.h"
+#include "MaxFlow.h"
+#include "RiskAnalysis.h"
 
 int main(int argc, char* argv[]) {
 
@@ -16,7 +18,17 @@ int main(int argc, char* argv[]) {
             Input data        = parseFile(inputFile);
             Graph<Node> graph = makeGraph(data);
 
-            // executar o algoritmo
+            Node source{0, Node::Type::SOURCE};
+            Node sink{0, Node::Type::SINK};
+            if (data.getRiskAnalysis()!=0) {
+                edmondsKarp(&graph,source,sink);
+                printResults(graph,data,outputFile);
+                riskAnalysis(&graph,source,sink,outputFile);
+            }
+            else {
+                edmondsKarp(&graph,source,sink);
+                printResults(graph,data,outputFile);
+            }
 
         } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;
