@@ -60,6 +60,8 @@ string parseString(string& line) {
     stringstream ss(line);
     getline(ss,line,',');
     getline(ss,line,',');
+    line = line.substr(2,line.size()-3);
+
     return line;
 }
 
