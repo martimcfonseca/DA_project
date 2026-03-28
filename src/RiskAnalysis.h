@@ -9,6 +9,6 @@
 
 
 template <class T>
-void riskAnalysis(Graph<T> *g, T source, T target);
+void riskAnalysis(Graph<T> *g, T source, T target,const std::string& outputFile);
 
 #endif //DA_PROJECT_RISKANALYSIS_H

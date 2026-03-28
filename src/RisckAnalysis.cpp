@@ -6,9 +6,10 @@
 #include <vector>
 #include "MaxFlow.h"
 #include "Parser.h"
+#include <fstream>
 
 template <class T>
-void riskAnalysis(Graph<T> *g, T source, T target) {
+void riskAnalysis(Graph<T> *g, T source, T target,const std::string& outputFile) {
 
     std::vector<int> reviewers;
 
@@ -50,12 +51,16 @@ void riskAnalysis(Graph<T> *g, T source, T target) {
 
     }
 
-    std::cout << "#Risk Analysis: 1" << std::endl;
-    for (auto r : reviewers) {
-        std::cout << r << ", ";
+    std::ofstream out(outputFile, std::ios::app);
+    if (!out.is_open()) {
+        std::cerr << "Erro ao abrir ficheiro: " << outputFile << std::endl;
+        return;
     }
+    out << "#Risk Analysis: 1\n";
+    for (int id : reviewers)
+        out << id << ", ";
 
 
 }
 
-template void riskAnalysis<Node>(Graph<Node>*, Node, Node);
+template void riskAnalysis<Node>(Graph<Node>*, Node, Node,const std::string& outputFile);

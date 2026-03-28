@@ -94,7 +94,7 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 Node source{0, Node::Type::SOURCE};
                 Node sink{0, Node::Type::SINK};
                 edmondsKarp(&graph, source, sink);
-                printResults(graph,data);
+                printResults(graph,data,data.getOutputFileName());
                 break;
             }
             case 6: {
@@ -102,8 +102,8 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 Node source{0, Node::Type::SOURCE};
                 Node sink{0, Node::Type::SINK};
                 edmondsKarp(&graph,source,sink);
-                printResults(graph,data);
-                riskAnalysis(&graph, source, sink);
+                printResults(graph,data,data.getOutputFileName());
+                riskAnalysis(&graph, source, sink,data.getOutputFileName());
                 break;
             }
             case 0:

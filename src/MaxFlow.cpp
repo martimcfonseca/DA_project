@@ -1,5 +1,6 @@
 #include "MaxFlow.h"
 #include <map>
+#include <fstream>
 
 template <class T>
 void testAndVisit(std::queue< Vertex<T>*> &q, Edge<T> *e, Vertex<T> *w, double residual) {
@@ -95,7 +96,7 @@ void edmondsKarp(Graph<T> *g, T source, T target) {
 }
 
 
-void printResults(const Graph<Node>& graph, const Input& data) {
+void printResults(const Graph<Node>& graph, const Input& data,const std::string& outputFile) {
     Node source{0, Node::Type::SOURCE};
     Node sink{0, Node::Type::SINK};
 
@@ -104,6 +105,12 @@ void printResults(const Graph<Node>& graph, const Input& data) {
     std::map<int, std::vector<std::pair<int,int>>> subToRevs;
     // reviewerId -> list of submissionIds assignedl
     std::map<int, std::vector<std::pair<int,int>>> revToSubs;
+
+    std::ofstream out(outputFile);
+    if (!out.is_open()) {
+        std::cerr << "Erro ao abrir ficheiro: " << outputFile << std::endl;
+        return;
+    }
 
     // Read flows on sub->reviewer edges
     for (auto& rev : data.getReviewers()) {
@@ -130,21 +137,21 @@ void printResults(const Graph<Node>& graph, const Input& data) {
     }
 
     // #SubmissionId,ReviewerId,Match
-    std::cout << "#SubmissionId,ReviewerId,Match\n";
+    out << "#SubmissionId,ReviewerId,Match\n";
     for (auto& [subId, revIds] : subToRevs)
         for (auto& rev : revIds)
-            std::cout << subId << ", " << rev.first << ", " << rev.second << "\n";
+            out << subId << ", " << rev.first << ", " << rev.second << "\n";
 
     // #ReviewerId,SubmissionId,Match
-    std::cout << "#ReviewerId,SubmissionId,Match\n";
+    out << "#ReviewerId,SubmissionId,Match\n";
     for (auto& [revId, subIds] : revToSubs)
         for (auto& sub : subIds)
-            std::cout << revId << ", " << sub.first << ", " << sub.second << "\n";
+            out << revId << ", " << sub.first << ", " << sub.second << "\n";
 
     // Total assignments
     int total = 0;
     for (auto& [subId, revIds] : subToRevs) total += revIds.size();
-    std::cout << "#Total: " << total << "\n";
+    out << "#Total: " << total << "\n";
 
     // Missing reviews per submission
     std::vector<std::tuple<int,int,int>> miss;
@@ -156,7 +163,7 @@ void printResults(const Graph<Node>& graph, const Input& data) {
         }
     }
     if (!miss.empty()) {
-        std::cout << "#SubmissionId,Domain,MissingReviews\n";
+        out << "#SubmissionId,Domain,MissingReviews\n";
         for (auto& [subId, domain, count] : miss)
             std::cout << subId << ", " << domain << ", " << count << "\n";
     }

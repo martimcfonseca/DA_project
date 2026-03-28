@@ -9,6 +9,6 @@
 template <class T>
 void edmondsKarp(Graph<T> *g, T source, T target);
 
-void printResults(const Graph<Node>& graph, const Input& data);
+void printResults(const Graph<Node>& graph, const Input& data,const std::string& outputFile);
 
 #endif //DA_PROJECT_MAXFLOW_H
