@@ -294,14 +294,14 @@ Graph<Node> makeGraph(const Input& data) {
         Node rev{reviewer.id,Node::Type::REVIEWER,reviewer.primary,reviewer.secondary};
         graph.addVertex(rev);
         graph.addEdge(rev,sink,data.getMaxReviewsPerReviewer());
-        if (data.getSecondarySubmissionDomain()==0 && data.getSecondaryReviewerExpertise()==0){
+        if (data.getGenerateAssignments() == 1 && data.getSecondarySubmissionDomain()==0 && data.getSecondaryReviewerExpertise()==0){
             for (auto& sub : subs) {
                 if (rev.primary == sub.primary) {
                     graph.addEdge(sub,rev, 1);
                 }
             }
         }
-        else if (data.getSecondarySubmissionDomain()==1 && data.getSecondaryReviewerExpertise()==0) {
+        else if (data.getGenerateAssignments() == 2 && data.getSecondarySubmissionDomain()==1 && data.getSecondaryReviewerExpertise()==0) {
             for (auto& sub : subs) {
                 if (rev.primary == sub.primary || rev.primary == sub.secondary) {
                     graph.addEdge(sub,rev,1);
