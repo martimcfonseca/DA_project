@@ -3,6 +3,7 @@
  * @file Parser.h
  * @brief Declarations of functions responsible for reading input files, storing all information,
  * and creating the flow graph.
+ * @note See the implementation in /ref Parser.cpp "Parser.cpp"
  */
 
 #ifndef DA_PROJECT_PARSER_H
@@ -45,24 +46,10 @@ public:
         cout << ' ' << primary << ' ' << secondary <<std::endl;
     }
 };
-/**
- * @brief Reads and processes the input CSV file.
- *
- * @param filename Path to the CSV file.
- * @return Input object populated with submissions, reviewers, and parameters.
- *
- */
+
 Input       parseFile(const std::string& filename);
 
-/**
- * @brief Builds the flow network (graph) from the input data.
- *
- * Creates the connections: Source -> Submissions, Submissions -> Reviewers, Reviewers -> Sink.
- * Sets capacities based on minimum and maximum review parameters.
- *
- * @param data Input object containing the read data.
- * @return Graph<Node> The constructed graph.
- */
+
 Graph<Node> makeGraph(const Input& data);
 
 #endif

@@ -1,6 +1,12 @@
 // Original code by Gonçalo Leão
 // Updated by DA 2024/2025 Team
 
+/**
+ * @file Graph.h
+ * @brief Declaration and implementation of the graph data structure, including the Vertex and Edge classes and their associated methods.
+ */
+
+
 #ifndef DA_TP_CLASSES_GRAPH
 #define DA_TP_CLASSES_GRAPH
 

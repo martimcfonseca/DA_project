@@ -17,12 +17,11 @@
  * The project is organized as follows:
  * - \ref Input "Input.h/cpp" - handles reading CSV files and storing submissions, reviewers, and parameters.
  * - \ref Graph "Graph.h/cpp" - defines the graph structures.
- * - \ref MaxFlow "MaxFlow.h/cpp" - implements the Edmonds-Karp algorithm and outputs results.
- * - \ref RiskAnalysis "RiskAnalysis.h/cpp" - performs critical reviewer analysis.
- * - \ref Parser "Parser.h/cpp" - parses CSV files and builds the graph.
- * - \ref Menu "Menu.h/cpp" - displays the terminal menu and manages user actions.
+ * - \ref MaxFlow.h "MaxFlow.h/cpp" - implements the Edmonds-Karp algorithm and outputs results.
+ * - \ref RiskAnalysis.h "RiskAnalysis.h/cpp" - performs critical reviewer analysis.
+ * - \ref Parser.h "Parser.h/cpp" - parses CSV files and builds the graph.
+ * - \ref Menu.h "Menu.h/cpp" - displays the terminal menu and manages user actions.
  * - \ref main "main.cpp" - entry point of the program.
- *
  * @section notes_sec Notes
  * - All algorithms are documented with their time complexity when relevant.
  */

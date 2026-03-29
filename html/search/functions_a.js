@@ -1,9 +1,0 @@
-var searchData=
-[
-  ['removeedge_0',['removeedge',['../classVertex.html#ac1f1dd0a8e1019a242f1120d6559c754',1,'Vertex::removeEdge()'],['../classGraph.html#a8949d071d45bf93e171e275462e1007a',1,'Graph::removeEdge()']]],
-  ['removeoutgoingedges_1',['removeOutgoingEdges',['../classVertex.html#a414ce58fdf35ee5200a82912f3865506',1,'Vertex']]],
-  ['removevertex_2',['removeVertex',['../classGraph.html#af9c903104ad69a7782979fa9caedf163',1,'Graph']]],
-  ['riskanalysis_3',['riskanalysis',['../RiskAnalysis_8cpp.html#a22c1a1869e8a7e170513e5660f014149',1,'riskAnalysis(Graph&lt; T &gt; *g, T source, T target, const std::string &amp;outputFile):&#160;RiskAnalysis.cpp'],['../RiskAnalysis_8h.html#a22c1a1869e8a7e170513e5660f014149',1,'riskAnalysis(Graph&lt; T &gt; *g, T source, T target, const std::string &amp;outputFile):&#160;RiskAnalysis.cpp']]],
-  ['riskanalysis_3c_20node_20_3e_4',['riskAnalysis&lt; Node &gt;',['../RiskAnalysis_8cpp.html#a6c47d468cd6de9d9dc64ea1279e0f32a',1,'RiskAnalysis.cpp']]],
-  ['runmenu_5',['runmenu',['../Menu_8cpp.html#a6a1391e89405197759f94127affde7f9',1,'runMenu(Input &amp;data, Graph&lt; Node &gt; &amp;graph, bool loaded):&#160;Menu.cpp'],['../Menu_8h.html#a6a1391e89405197759f94127affde7f9',1,'runMenu(Input &amp;data, Graph&lt; Node &gt; &amp;graph, bool loaded):&#160;Menu.cpp']]]
-];
