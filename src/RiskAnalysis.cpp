@@ -77,10 +77,12 @@ void riskAnalysis(Graph<T> *g, T source, T target,const std::string& outputFile)
         return;
     }
     out << "#Risk Analysis: 1\n";
-    for (int id : reviewers)
-        out << id << ", ";
-
-
+    if (!reviewers.empty()) {
+        out << reviewers[0];
+        for (int i = 1; i < reviewers.size(); i++) {
+            out << ", " << reviewers[i];
+        }
+    }
 }
 
 template void riskAnalysis<Node>(Graph<Node>*, Node, Node,const std::string& outputFile);
