@@ -76,12 +76,13 @@ void riskAnalysis(Graph<T> *g, T source, T target,const std::string& outputFile)
         std::cerr << "Erro ao abrir ficheiro: " << outputFile << std::endl;
         return;
     }
-    out << "#Risk Analysis: 1\n";
+    out << "#Risk Analysis: 1" << std::endl;
     if (!reviewers.empty()) {
         out << reviewers[0];
         for (int i = 1; i < reviewers.size(); i++) {
             out << ", " << reviewers[i];
         }
+        out << '\n';
     }
 }
 
