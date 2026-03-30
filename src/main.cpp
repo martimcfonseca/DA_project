@@ -21,7 +21,7 @@
  * - \ref RiskAnalysis.h "RiskAnalysis.h/cpp" - performs critical reviewer analysis.
  * - \ref Parser.h "Parser.h/cpp" - parses CSV files and builds the graph.
  * - \ref Menu.h "Menu.h/cpp" - displays the terminal menu and manages user actions.
- * - \ref main "main.cpp" - entry point of the program.
+ * - \ref main.cpp "main.cpp" - entry point of the program.
  * @section notes_sec Notes
  * - All algorithms are documented with their time complexity when relevant.
  */

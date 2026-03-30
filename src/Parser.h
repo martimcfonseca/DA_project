@@ -3,7 +3,7 @@
  * @file Parser.h
  * @brief Declarations of functions responsible for reading input files, storing all information,
  * and creating the flow graph.
- * @note See the implementation in /ref Parser.cpp "Parser.cpp"
+ * @note See the implementation in \ref Parser.cpp "Parser.cpp"
  */
 
 #ifndef DA_PROJECT_PARSER_H
