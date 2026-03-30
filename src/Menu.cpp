@@ -22,7 +22,6 @@ void printMenu() {
     std::cout << "3. Listar revisores"           << endl;
     std::cout << "4. Ver parametros"             << endl;
     std::cout << "5. Gerar atribuicoes"          << endl;
-    std::cout << "6. Risk Analysis"              << endl;
     std::cout << "0. Sair"                       << endl;
     std::cout << "==========================" << endl;
     std::cout << "Opcao: ";
@@ -142,15 +141,9 @@ void runMenu(Input& data, Graph<Node>& graph, bool loaded) {
                 Node sink{0, Node::Type::SINK};
                 edmondsKarp(&graph, source, sink);
                 printResults(graph,data,data.getOutputFileName());
-                break;
-            }
-            case 6: {
-                if (!loaded) { cout << "Carrega um ficheiro primeiro!" << endl; break; }
-                Node source{0, Node::Type::SOURCE};
-                Node sink{0, Node::Type::SINK};
-                edmondsKarp(&graph,source,sink);
-                printResults(graph,data,data.getOutputFileName());
-                riskAnalysis(&graph, source, sink,data.getOutputFileName());
+                if (data.getRiskAnalysis()!=0) {
+                    riskAnalysis(&graph, source, sink,data.getOutputFileName());
+                }
                 break;
             }
             case 0:
