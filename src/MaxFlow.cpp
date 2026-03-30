@@ -185,12 +185,8 @@ void printResults(const Graph<Node>& graph, const Input& data, const std::string
 
 void printResults(const Graph<Node>& graph, const Input& data,const std::string& outputFile) {
     Node source{0, Node::Type::SOURCE};
-    Node sink{0, Node::Type::SINK};
 
-    // Maps for output
-    // submissionId -> list of reviewerIds assigned
     std::map<int, std::vector<std::pair<int,int>>> subToRevs;
-    // reviewerId -> list of submissionIds assignedl
     std::map<int, std::vector<std::pair<int,int>>> revToSubs;
 
     std::ofstream out(outputFile);
@@ -199,7 +195,6 @@ void printResults(const Graph<Node>& graph, const Input& data,const std::string&
         return;
     }
 
-    // Read flows on sub->reviewer edges
     for (auto& rev : data.getReviewers()) {
         Node revNode{rev.id, Node::Type::REVIEWER, rev.primary, rev.secondary};
         Vertex<Node>* revVertex = graph.findVertex(revNode);
@@ -223,27 +218,27 @@ void printResults(const Graph<Node>& graph, const Input& data,const std::string&
         }
     }
 
-    // #SubmissionId,ReviewerId,Match
+
     out << "#SubmissionId,ReviewerId,Match\n";
-    for (auto& [subId, revIds] : subToRevs)
-        for (auto& rev : revIds)
-            out << subId << ", " << rev.first << ", " << rev.second << "\n";
+    for (auto& subToRev : subToRevs)
+        for (auto& rev : subToRev.second)
+            out << subToRev.first << ", " << rev.first << ", " << rev.second << "\n";
 
-    // #ReviewerId,SubmissionId,Match
+
     out << "#ReviewerId,SubmissionId,Match\n";
-    for (auto& [revId, subIds] : revToSubs)
-        for (auto& sub : subIds)
-            out << revId << ", " << sub.first << ", " << sub.second << "\n";
+    for (auto& revToSub : revToSubs)
+        for (auto& sub : revToSub.second)
+            out << revToSub.first << ", " << sub.first << ", " << sub.second << "\n";
 
-    // Total assignments
-    int total = 0;
-    for (auto& [subId, revIds] : subToRevs) total += revIds.size();
+
+    unsigned int total = 0;
+    for (auto& subToRev : subToRevs) total += subToRev.second.size();
     out << "#Total: " << total << "\n";
 
-    // Missing reviews per submission
-    std::vector<std::tuple<int,int,int>> miss;
+
+    std::vector<std::vector<int>> miss;
     for (auto& edge : graph.findVertex(source)->getAdj()) {
-        int missingFlow = data.getMinReviewsPerSubmission() - edge->getFlow();
+        int missingFlow =  data.getMinReviewsPerSubmission() - edge->getFlow();
         if (missingFlow > 0) {
             auto sub = edge->getDest()->getInfo();
             miss.push_back({sub.id,sub.primary,missingFlow});
@@ -251,8 +246,8 @@ void printResults(const Graph<Node>& graph, const Input& data,const std::string&
     }
     if (!miss.empty()) {
         out << "#SubmissionId,Domain,MissingReviews\n";
-        for (auto& [subId, domain, count] : miss)
-            out << subId << ", " << domain << ", " << count << "\n";
+        for (auto& m : miss)
+            out << m[0] << ", " << m[1] << ", " << m[2] << "\n";
     }
 }
 
